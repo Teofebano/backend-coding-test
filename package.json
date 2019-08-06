@@ -7,21 +7,46 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "mocha tests",
+    "test": "npm run lint && nyc mocha tests --timeout 5000 --exit",
+    "lint": "eslint .",
     "start": "node index.js"
   },
   "keywords": [
     "Xendit"
   ],
+  "nyc": {
+    "check-coverage": true,
+    "statements": 80,
+    "branches": 80,
+    "functions": 80,
+    "lines": 80,
+    "all": true,
+    "exclude": [
+      "index.js",
+      "tests"
+    ]
+  },
   "author": "Bo",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "expect.js": "^0.3.1",
     "express": "^4.16.4",
+    "husky": "^3.0.2",
+    "nyc": "^14.1.1",
     "sqlite3": "^4.0.6"
   },
   "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.2.0",
+    "eslint-plugin-import": "^2.18.2",
     "mocha": "^6.1.4",
     "supertest": "^4.0.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run test",
+      "pre-push": "npm run test"
+    }
   }
 }
